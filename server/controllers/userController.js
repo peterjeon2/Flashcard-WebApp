@@ -1,4 +1,4 @@
-var User = require('../models/user');
+import User from '../models/user'
 
 exports.user_detail = function(req, res) {
     res.send('NOT IMPLEMENTED: user detail: ' + req.params.id);

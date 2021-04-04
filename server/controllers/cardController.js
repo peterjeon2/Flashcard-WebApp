@@ -1,4 +1,4 @@
-var Card = require('../models/card');
+import Card from '../models/card'
 
 exports.card_create_get = function(req, res) {
     res.send('NOT IMPLEMENTED: Card create GET');

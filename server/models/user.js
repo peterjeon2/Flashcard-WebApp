@@ -1,11 +1,11 @@
-var mongoose = require('mongoose');
+import mongoose from 'mongoose'
 
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema(
   {
-    firstname: {type: String, required: true},
-    lastname: {type: String, required: true},
+    first_name: {type: String, required: true},
+    last_name: {type: String, required: true},
     email: {type: String, required: true},
     date_joined: {type: Date, required: true},
     sets: [{type: Schema.Types.ObjectId, ref: 'Set'}]
@@ -19,4 +19,4 @@ UserSchema
 });
 
 //Export model
-module.exports = mongoose.model('User', UserSchema);
+export default mongoose.model('User', UserSchema);

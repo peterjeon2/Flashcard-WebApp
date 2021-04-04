@@ -1,37 +1,37 @@
-var Set = require('../models/set');
+import Deck from '../models/deck'
 
 exports.index = function(req,res) {
     res.send('NOT IMPLEMENTED: Site Home Page');
 };
 
-exports.set_list = function(req, res) {
-    res.send('NOT IMPLEMENTED: Set list');
+exports.deck_list = function(req, res) {
+    res.send('NOT IMPLEMENTED: deck list');
 };
 
-exports.set_detail = function(req, res) {
-    res.send('NOT IMPLEMENTED: Set detail: ' + req.params.id);
+exports.deck_detail = function(req, res) {
+    res.send('NOT IMPLEMENTED: deck detail: ' + req.params.id);
 };
 
-exports.set_create_get = function(req, res) {
-    res.send('NOT IMPLEMENTED: Set create GET');
+exports.deck_create_get = function(req, res) {
+    res.send('NOT IMPLEMENTED: deck create GET');
 };
 
-exports.set_create_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: Set create POST');
+exports.deck_create_post = function(req, res) {
+    res.send('NOT IMPLEMENTED: deck create POST');
 };
 
-exports.set_delete_get = function(req, res) {
-    res.send('NOT IMPLEMENTED: Set delete GET');
+exports.deck_delete_get = function(req, res) {
+    res.send('NOT IMPLEMENTED: deck delete GET');
 };
 
-exports.set_delete_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: set delete POST');
+exports.deck_delete_post = function(req, res) {
+    res.send('NOT IMPLEMENTED: deck delete POST');
 };
 
-exports.set_update_get = function(req, res) {
-    res.send('NOT IMPLEMENTED: set update GET');
+exports.deck_update_get = function(req, res) {
+    res.send('NOT IMPLEMENTED: deck update GET');
 };
 
-exports.set_update_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: set update POST');
+exports.deck_update_post = function(req, res) {
+    res.send('NOT IMPLEMENTED: deck update POST');
 };
