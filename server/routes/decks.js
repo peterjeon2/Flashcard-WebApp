@@ -1,5 +1,5 @@
 import express from 'express';
-var router = express.Router();
+const router = express.Router();
 import card_controller from '../controllers/cardController'
 import deck_controller from '../controllers/deckController'
 import user_controller from '../controllers/userController'
@@ -8,69 +8,53 @@ router.get('/', deck_controller.index);
 
 /// CARD ROUTES ///
 
-// GET request for creating a card. NOTE This must come before routes that display card (uses id).
-router.get('/user/:id/deck/:id/card/create', card_controller.card_create_get);
+// GET request for cards.
 
-// POST request for creating card.
-router.post('/user/:id/deck/:id/card/create', card_controller.card_create_post);
+router.get('/users/:id/decks/:id/cards', card_controller.getCards);
 
-// GET request to delete card.
-router.get('/user/:id/deck/:id/card/:id/delete', card_controller.card_delete_get);
+// GET request for individual card.
 
-// POST request to delete card.
-router.post('/user/:id/deck/:id/card/:id/delete', card_controller.card_delete_post);
+router.get('/users/:id/decks/:id/cards/:id', card_controller.getCard);
 
-// GET request to update card.
-router.get('/user/:id/deck/:id/card/:id/update', card_controller.card_update_get);
+// POST request for creating a card.
+router.get('/users/:id/decks/:id/cards/create', card_controller.addCard);
 
-// POST request to update card.
-router.post('/user/:id/deck/:id/card/:id/update', card_controller.card_update_post);
+// DELETE request to delete card.
+router.get('/users/:id/decks/:id/cards/:id/delete', card_controller.deleteCard);
+
+// PUT request to update card.
+router.get('/users/:id/decks/:id/cards/:id/update', card_controller.updateCard);
 
 /// USER ROUTES ///
 
-// GET request for creating user. NOTE This must come before route for id (i.e. display user).
-router.get('/user/create', user_controller.user_create_get);
+// GET request for individual user.
 
-// POST request for creating user.
-router.post('/user/create', user_controller.user_create_post);
+router.get('/users/:id', user_controller.getUser);
 
-// GET request to delete user.
-router.get('/user/:id/delete', user_controller.user_delete_get);
+// POST request for creating a user.
+router.get('/users/create', user_controller.createUser);
 
-// POST request to delete user.
-router.post('/user/:id/delete', user_controller.user_delete_post);
+// DELETE request to delete card.
+router.get('/users/:id/delete', user_controller.deleteUser);
 
-// GET request to update user.
-router.get('/user/:id/update', user_controller.user_update_get);
-
-// POST request to update user.
-router.post('/user/:id/update', user_controller.user_update_post);
-
-// GET request for one user.
-router.get('/user/:id', user_controller.user_detail);
+// PUT request to update user.
+router.get('/users/:id/update', user_controller.updateUser);
 
 /// deck ROUTES ///
 
-// GET request for creating a deck. NOTE This must come before route that displays deck (uses id).
-router.get('/user/:id/deck/create', deck_controller.deck_create_get);
+// GET request for decks.
 
-//POST request for creating deck.
-router.post('/user/:id/deck/create', deck_controller.deck_create_post);
+router.get('/users/:id/decks', deck_controller.getDecks);
 
-// GET request to delete deck.
-router.get('/user/:id/deck/:id/delete', deck_controller.deck_delete_get);
+// GET request for individual deck.
 
-// POST request to delete deck.
-router.post('/user/:id/deck/:id/delete', deck_controller.deck_delete_post);
+router.get('/users/:id/decks/:id', deck_controller.getDeck);
 
-// GET request to update deck.
-router.get('/user/:id/deck/:id/update', deck_controller.deck_update_get);
+// POST request for creating a deck.
+router.get('/users/:id/decks/:id/create', deck_controller.addDeck);
 
-// POST request to update deck.
-router.post('/user/:id/deck/:id/update', deck_controller.deck_update_post);
+// DELETE request to delete deck.
+router.get('/users/:id/decks/:id/delete', deck_controller.deleteDeck);
 
-// GET request for one deck.
-router.get('/user/:id/deck/:id', deck_controller.deck_detail);
-
-// GET request for list of all deck.
-router.get('/user/:id/decks', deck_controller.deck_list);
+// PUT request to update deck.
+router.get('/users/:id/decks/update', deck_controller.updateDeck);

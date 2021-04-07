@@ -1,12 +1,13 @@
 import mongoose from 'mongoose'
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-var CardSchema = new Schema(
+const CardSchema = new Schema(
   {
     word: {type: String, required: true},
     definition: {type: String, required: true},
-    creator: {type: Schema.Types.ObjectId, ref: 'User', required: true}
+    user_id: {type: Schema.Types.ObjectId, ref: 'User', required: true},
+    deck_id: {type: Schema.Types.ObjectId, ref: 'Deck', required: true}
   }
 );
 

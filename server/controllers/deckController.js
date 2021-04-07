@@ -1,16 +1,16 @@
-import Card from '../models/card'
+import Deck from '../models/deck'
 
-// @desc    Get Cards
-// @route   GET /users/:id/decks/:id/cards
+// @desc    Get Decks
+// @route   GET /users/:id/decks
 // @access  Public
 
-exports.getCards = async (req, res, next) => {
+exports.getDecks = async (req, res, next) => {
     try { 
-        const cards = await Card.find();
+        const decks = await Deck.find();
 
         return res.status(200).json({
             success: true,
-            data: cards
+            data: decks
         });
     } catch (err) {
         return res.status(500).json({
@@ -21,19 +21,19 @@ exports.getCards = async (req, res, next) => {
 }
 
 
-// @desc    Get individual Card
-// @route   GET /users/:id/decks/:id/cards/:id
+// @desc    Get individual Deck
+// @route   GET /users/:id/decks/:id
 // @access  Public
 
-exports.getCard = async (req, res, next) => {
+exports.getDeck = async (req, res, next) => {
     const { id } = req.params;
 
     try { 
-        const card = await Card.findById(id);
+        const deck = await Deck.findById(id);
 
         return res.status(200).json({
             success: true,
-            data: card
+            data: deck
         });
     } catch (err) {
         return res.status(500).json({
@@ -43,19 +43,19 @@ exports.getCard = async (req, res, next) => {
     }
 }
 
-// @desc    Add Card
-// @route   POST /users/:id/decks/id/cards/create
+// @desc    Add deck
+// @route   POST /users/:id/decks/create
 // @access  Public
 
-exports.addCard = async (req, res, next) => {
+exports.addDeck = async (req, res, next) => {
     try { 
-        const { word, definition, user_id, deck_id} = req.body;
+        const { name, user, date_created, description, cards} = req.body;
         
-        const card = await Card.create(req.body);
+        const deck = await Deck.create(req.body);
 
         return res.status(201).json({
             success: true,
-            data: card
+            data: deck
         });
     } catch (err) {
         if (err.name === 'ValidationError') {
@@ -73,28 +73,28 @@ exports.addCard = async (req, res, next) => {
     }
 }
 
-// @desc    Update card
-// @route   Put /users/:id/decks/:id/cards/:id/update
+// @desc    Update deck
+// @route   POST /users/:id/decks/:id/update
 // @access  Public
 
-exports.updateCard = async (req, res, next) => {
+exports.updateDeck = async (req, res, next) => {
     try { 
-        const card = await Card.findById(req.params.id);
-        const { word, definition, user_id, deck_id } = req.body;
+        const deck = await Deck.findById(req.params.id);
+        const { name, user, date_created, description, cards} = req.body;
 
-        if (!card) {
+        if (!deck) {
             return res.status(404).json({
                 success: false,
-                error: 'No Card found'
+                error: 'No deck found'
             });
         }
 
-        const updatedCard = { word, definition, user_id, deck_id, _id: id};
+        const updatedDeck = { name, user, date_created, description, cards, _id: id};
         
-        card = await Card.findByIdAndUpdate(id, updatedCard, { new: true });
+        deck = await Deck.findByIdAndUpdate(id, updatedDeck, { new: true });
         return res.status(200).json({
             success: true,
-            data: {card}
+            data: {deck}
         });
     } catch (err) {
         return res.status(500).json({
@@ -105,18 +105,18 @@ exports.updateCard = async (req, res, next) => {
 }
 
 
-// @desc    Delete Card
-// @route   DELETE /users/:id/decks/:id/cards/:id/delete
+// @desc    Delete deck
+// @route   DELETE /users/:id/decks/:id/delete
 // @access  Public
 
-exports.deleteCard = async (req, res, next) => {
+exports.deleteDeck = async (req, res, next) => {
     try { 
-        const card = await Card.findById(req.params.id);
+        const deck = await Deck.findById(req.params.id);
 
-        if (!card) {
+        if (!deck) {
             return res.status(404).json({
                 success: false,
-                error: 'No Card found'
+                error: 'No deck found'
             });
         }
 

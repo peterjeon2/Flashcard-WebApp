@@ -16,8 +16,8 @@ var cards = []
 var decks = []
 var users = []
 
-function deckCreate(name, creator, date_created, language, cards, cb) {
-    var deck_detail = {name, creator, date_created, language};
+function deckCreate(name, user, date_created, description, cards, cb) {
+    var deck_detail = {name, user, date_created, description};
 
     if (cards) deck_detail.cards = cards;
 
@@ -33,8 +33,8 @@ function deckCreate(name, creator, date_created, language, cards, cb) {
         cb(null, deck)
     });
 }
-function cardCreate(word, definition, creator, cb) {
-    var card_detail = {word, definition, creator};
+function cardCreate(word, definition, user, cb) {
+    var card_detail = {word, definition, user};
 
     var card = new Card(card_detail);
 
@@ -49,10 +49,9 @@ function cardCreate(word, definition, creator, cb) {
     });
 }
 
-function userCreate(first_name, last_name, email, date_joined, decks, cb ) {
+function userCreate(first_name, last_name, email, date_joined, cb ) {
     var user_detail = {first_name, last_name, email, date_joined};
 
-    if (decks) user_detail.decks = decks;
 
     var user = new User(user_detail);
 
@@ -70,13 +69,13 @@ function userCreate(first_name, last_name, email, date_joined, decks, cb ) {
 function createUsers(cb) {
     async.series([
         function(callback) {
-          userCreate('Peter', 'Jeon', 'peterjeon2@gmail.com', '2020-06-06', false, callback);
+          userCreate('Peter', 'Jeon', 'peterjeon2@gmail.com', '2020-06-06', callback);
         },
         function(callback) {
-          userCreate('Irene', 'Jeon', 'irenejeon@gmail.com','2020-09-12', false, callback);
+          userCreate('Irene', 'Jeon', 'irenejeon@gmail.com','2020-09-12', callback);
         },
         function(callback) {
-          userCreate('Isaac', 'Jeon', 'isaacjeon@gmail.com','2021-03-01', false, callback);
+          userCreate('Isaac', 'Jeon', 'isaacjeon@gmail.com','2021-03-01', callback);
         }],
         cb);
 }
