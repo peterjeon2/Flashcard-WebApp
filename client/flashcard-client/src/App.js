@@ -1,6 +1,4 @@
-import * as React from 'react'
-
-import { useSelector, useDispatch } from 'react-redux'
+import React from 'react';
 
 const App = () => {
     return (
