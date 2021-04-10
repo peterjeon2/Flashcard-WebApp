@@ -22,7 +22,7 @@ exports.getDecks = async (req, res, next) => {
 
 
 // @desc    Get individual Deck
-// @route   GET /users/:id/decks/:id
+// @route   GET /users/:userId/decks/:id
 // @access  Public
 
 exports.getDeck = async (req, res, next) => {
@@ -44,12 +44,12 @@ exports.getDeck = async (req, res, next) => {
 }
 
 // @desc    Add deck
-// @route   POST /users/:id/decks/create
+// @route   POST /users/:userId/decks/create
 // @access  Public
 
 exports.addDeck = async (req, res, next) => {
     try { 
-        const { name, user, date_created, description, cards} = req.body;
+        const { name, userId, date_created, description, cards} = req.body;
         
         const deck = await Deck.create(req.body);
 
@@ -74,13 +74,13 @@ exports.addDeck = async (req, res, next) => {
 }
 
 // @desc    Update deck
-// @route   POST /users/:id/decks/:id/update
+// @route   POST /users/:userId/decks/:id/update
 // @access  Public
 
 exports.updateDeck = async (req, res, next) => {
     try { 
         const deck = await Deck.findById(req.params.id);
-        const { name, user, date_created, description, cards} = req.body;
+        const { name, userId, date_created, description, cards} = req.body;
 
         if (!deck) {
             return res.status(404).json({
@@ -106,7 +106,7 @@ exports.updateDeck = async (req, res, next) => {
 
 
 // @desc    Delete deck
-// @route   DELETE /users/:id/decks/:id/delete
+// @route   DELETE /users/:userId/decks/:id/delete
 // @access  Public
 
 exports.deleteDeck = async (req, res, next) => {
