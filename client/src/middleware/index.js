@@ -1,5 +1,5 @@
 import thunk from 'redux-thunk'
-import { applyMiddleware, applyMiddleware } from 'redux'
+import { applyMiddleware } from 'redux'
 
 export default applyMiddleware(
     thunk

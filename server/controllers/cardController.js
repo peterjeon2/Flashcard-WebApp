@@ -1,7 +1,7 @@
 import Card from '../models/card'
 
 // @desc    Get Cards
-// @route   GET /users/:id/decks/:id/cards
+// @route   GET /users/:userId/decks/:deckId/cards
 // @access  Public
 
 exports.getCards = async (req, res, next) => {
@@ -22,7 +22,7 @@ exports.getCards = async (req, res, next) => {
 
 
 // @desc    Get individual Card
-// @route   GET /users/:id/decks/:id/cards/:id
+// @route   GET /users/:userId/decks/:deckId/cards/:id
 // @access  Public
 
 exports.getCard = async (req, res, next) => {
@@ -44,12 +44,12 @@ exports.getCard = async (req, res, next) => {
 }
 
 // @desc    Add Card
-// @route   POST /users/:id/decks/id/cards/create
+// @route   POST /users/:userId/decks/:deckId/cards/create
 // @access  Public
 
 exports.addCard = async (req, res, next) => {
     try { 
-        const { word, definition, user_id, deck_id} = req.body;
+        const { word, definition, userId, deckId} = req.body;
         
         const card = await Card.create(req.body);
 
@@ -74,13 +74,13 @@ exports.addCard = async (req, res, next) => {
 }
 
 // @desc    Update card
-// @route   Put /users/:id/decks/:id/cards/:id/update
+// @route   Put /users/:userId/decks/:deckId/cards/:id/update
 // @access  Public
 
 exports.updateCard = async (req, res, next) => {
     try { 
         const card = await Card.findById(req.params.id);
-        const { word, definition, user_id, deck_id } = req.body;
+        const { word, definition, userId, deckId } = req.body;
 
         if (!card) {
             return res.status(404).json({
@@ -89,7 +89,7 @@ exports.updateCard = async (req, res, next) => {
             });
         }
 
-        const updatedCard = { word, definition, user_id, deck_id, _id: id};
+        const updatedCard = { word, definition, userId, deckId, _id: id};
         
         card = await Card.findByIdAndUpdate(id, updatedCard, { new: true });
         return res.status(200).json({
@@ -106,7 +106,7 @@ exports.updateCard = async (req, res, next) => {
 
 
 // @desc    Delete Card
-// @route   DELETE /users/:id/decks/:id/cards/:id/delete
+// @route   DELETE /users/:userId/decks/:deckId/cards/:id/delete
 // @access  Public
 
 exports.deleteCard = async (req, res, next) => {
