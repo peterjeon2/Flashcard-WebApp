@@ -1,10 +1,35 @@
-import User from '../models/user'
+import express from 'express';
+import User from '../models/user.js'
+
+const router = express.Router();
+
+
+// @desc    Get Users
+// @route   GET /users
+// @access  Public
+
+export const getUsers = async (req, res, next) => {
+
+    try { 
+        const users = await User.find();
+
+        return res.status(200).json({
+            success: true,
+            data: users
+        });
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
+}
 
 // @desc    Get User
 // @route   GET /users/:id
 // @access  Public
 
-exports.getUser = async (req, res, next) => {
+export const getUser = async (req, res, next) => {
     const { id } = req.params;
 
     try { 
@@ -26,7 +51,7 @@ exports.getUser = async (req, res, next) => {
 // @route   POST /users/create
 // @access  Public
 
-exports.addUser = async (req, res, next) => {
+export const addUser = async (req, res, next) => {
     try { 
         const { first_name, last_name, email, date_joined} = req.body;
         
@@ -56,7 +81,7 @@ exports.addUser = async (req, res, next) => {
 // @route   POST /users/:id/update
 // @access  Public
 
-exports.updateUser = async (req, res, next) => {
+export const updateUser = async (req, res, next) => {
     try { 
         const user = await User.findById(req.params.id);
         const { first_name, last_name, email, date_joined} = req.body
@@ -88,7 +113,7 @@ exports.updateUser = async (req, res, next) => {
 // @route   DELETE /users/:id/delete
 // @access  Public
 
-exports.deleteUser = async (req, res, next) => {
+export const deleteUser = async (req, res, next) => {
     try { 
         const user = await User.findById(req.params.id);
 
@@ -113,4 +138,4 @@ exports.deleteUser = async (req, res, next) => {
     }
 }
 
-
+export default router;

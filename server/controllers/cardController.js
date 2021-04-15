@@ -1,10 +1,13 @@
-import Card from '../models/card'
+import express from 'express';
+import Card from '../models/card.js'
+
+const router = express.Router();
 
 // @desc    Get Cards
 // @route   GET /users/:userId/decks/:deckId/cards
 // @access  Public
 
-exports.getCards = async (req, res, next) => {
+export const getCards = async (req, res, next) => {
     try { 
         const cards = await Card.find();
 
@@ -25,7 +28,7 @@ exports.getCards = async (req, res, next) => {
 // @route   GET /users/:userId/decks/:deckId/cards/:id
 // @access  Public
 
-exports.getCard = async (req, res, next) => {
+export const getCard = async (req, res, next) => {
     const { id } = req.params;
 
     try { 
@@ -47,7 +50,7 @@ exports.getCard = async (req, res, next) => {
 // @route   POST /users/:userId/decks/:deckId/cards/create
 // @access  Public
 
-exports.addCard = async (req, res, next) => {
+export const addCard = async (req, res, next) => {
     try { 
         const { word, definition, userId, deckId} = req.body;
         
@@ -77,7 +80,7 @@ exports.addCard = async (req, res, next) => {
 // @route   Put /users/:userId/decks/:deckId/cards/:id/update
 // @access  Public
 
-exports.updateCard = async (req, res, next) => {
+export const updateCard = async (req, res, next) => {
     try { 
         const card = await Card.findById(req.params.id);
         const { word, definition, userId, deckId } = req.body;
@@ -109,7 +112,7 @@ exports.updateCard = async (req, res, next) => {
 // @route   DELETE /users/:userId/decks/:deckId/cards/:id/delete
 // @access  Public
 
-exports.deleteCard = async (req, res, next) => {
+export const deleteCard = async (req, res, next) => {
     try { 
         const card = await Card.findById(req.params.id);
 
@@ -134,3 +137,4 @@ exports.deleteCard = async (req, res, next) => {
     }
 }
 
+export default router;

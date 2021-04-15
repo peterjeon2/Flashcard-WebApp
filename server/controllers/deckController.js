@@ -1,10 +1,13 @@
-import Deck from '../models/deck'
+import express from 'express';
+import Deck from '../models/deck.js';
+
+const router = express.Router();
 
 // @desc    Get Decks
 // @route   GET /users/:id/decks
 // @access  Public
 
-exports.getDecks = async (req, res, next) => {
+export const getDecks = async (req, res, next) => {
     try { 
         const decks = await Deck.find();
 
@@ -25,7 +28,7 @@ exports.getDecks = async (req, res, next) => {
 // @route   GET /users/:userId/decks/:id
 // @access  Public
 
-exports.getDeck = async (req, res, next) => {
+export const getDeck = async (req, res, next) => {
     const { id } = req.params;
 
     try { 
@@ -47,7 +50,7 @@ exports.getDeck = async (req, res, next) => {
 // @route   POST /users/:userId/decks/create
 // @access  Public
 
-exports.addDeck = async (req, res, next) => {
+export const addDeck = async (req, res, next) => {
     try { 
         const { name, userId, date_created, description, cards} = req.body;
         
@@ -77,7 +80,7 @@ exports.addDeck = async (req, res, next) => {
 // @route   POST /users/:userId/decks/:id/update
 // @access  Public
 
-exports.updateDeck = async (req, res, next) => {
+export const updateDeck = async (req, res, next) => {
     try { 
         const deck = await Deck.findById(req.params.id);
         const { name, userId, date_created, description, cards} = req.body;
@@ -109,7 +112,7 @@ exports.updateDeck = async (req, res, next) => {
 // @route   DELETE /users/:userId/decks/:id/delete
 // @access  Public
 
-exports.deleteDeck = async (req, res, next) => {
+export const deleteDeck = async (req, res, next) => {
     try { 
         const deck = await Deck.findById(req.params.id);
 
@@ -134,3 +137,4 @@ exports.deleteDeck = async (req, res, next) => {
     }
 }
 
+export default router;
