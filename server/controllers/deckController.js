@@ -54,11 +54,11 @@ export const addDeck = async (req, res, next) => {
     try { 
         const { name, userId, date_created, description, cards} = req.body;
         
-        const deck = await Deck.create(req.body);
+        const newDeck = await Deck.create({ name, userId, date_created, description, cards});
 
         return res.status(201).json({
             success: true,
-            data: deck
+            data: newDeck
         });
     } catch (err) {
         if (err.name === 'ValidationError') {
@@ -92,12 +92,12 @@ export const updateDeck = async (req, res, next) => {
             });
         }
 
-        const updatedDeck = { name, user, date_created, description, cards, _id: id};
+        const deckDetail = { name, user, date_created, description, cards, _id: id};
         
-        deck = await Deck.findByIdAndUpdate(id, updatedDeck, { new: true });
+        const updatedDeck = await Deck.findByIdAndUpdate(req.params.id, deckDetail, { new: true });
         return res.status(200).json({
             success: true,
-            data: {deck}
+            data: updatedDeck
         });
     } catch (err) {
         return res.status(500).json({

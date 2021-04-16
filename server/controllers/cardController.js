@@ -54,11 +54,11 @@ export const addCard = async (req, res, next) => {
     try { 
         const { word, definition, userId, deckId} = req.body;
         
-        const card = await Card.create(req.body);
+        const newCard = await Card.create({ word, definition, userId, deckId});
 
         return res.status(201).json({
             success: true,
-            data: card
+            data: newCard
         });
     } catch (err) {
         if (err.name === 'ValidationError') {
@@ -92,12 +92,12 @@ export const updateCard = async (req, res, next) => {
             });
         }
 
-        const updatedCard = { word, definition, userId, deckId, _id: id};
+        const cardDetail = { word, definition, userId, deckId, _id: id};
         
-        card = await Card.findByIdAndUpdate(id, updatedCard, { new: true });
+        const updatedCard = await Card.findByIdAndUpdate(req.params.id, cardDetail, { new: true });
         return res.status(200).json({
             success: true,
-            data: {card}
+            data: updatedCard
         });
     } catch (err) {
         return res.status(500).json({

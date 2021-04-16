@@ -55,11 +55,11 @@ export const addUser = async (req, res, next) => {
     try { 
         const { first_name, last_name, email, date_joined} = req.body;
         
-        const user = await User.create(req.body);
+        const newUser = await User.create({first_name, last_name, email, date_joined});
 
         return res.status(201).json({
             success: true,
-            data: user
+            data: newUser
         });
     } catch (err) {
         if (err.name === 'ValidationError') {
@@ -78,13 +78,14 @@ export const addUser = async (req, res, next) => {
 }
 
 // @desc    Update user
-// @route   POST /users/:id/update
+// @route   PATCH /users/:id/update
 // @access  Public
 
 export const updateUser = async (req, res, next) => {
     try { 
         const user = await User.findById(req.params.id);
-        const { first_name, last_name, email, date_joined} = req.body
+        const { first_name, last_name, email} = req.body
+        const userDetail = { first_name, last_name, email}
 
         if (!user) {
             return res.status(404).json({
@@ -93,17 +94,16 @@ export const updateUser = async (req, res, next) => {
             });
         }
 
-        const updatedUser = { first_name, last_name, email, date_joined, _id: id};
         
-        user = await User.findByIdAndUpdate(id, updatedUser, { new: true });
+        const updatedUser = await User.findByIdAndUpdate(req.params.id, userDetail, { new: true });
         return res.status(200).json({
             success: true,
-            data: {user}
+            data: updatedUser
         });
     } catch (err) {
         return res.status(500).json({
             success: false,
-            error: 'Server Error'
+            error: err.message
         });
     }
 }
@@ -139,3 +139,4 @@ export const deleteUser = async (req, res, next) => {
 }
 
 export default router;
+
