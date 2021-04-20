@@ -1,7 +1,16 @@
 import express from 'express';
-import User from '../models/user.js'
+import User from '../models/User.js'
 
 const router = express.Router();
+
+
+// @desc Get user from browser
+// @route GET /getUser
+// @access Public
+
+export const getUserBrowser = (req, res) => 
+    {res.send(req.user)
+};
 
 
 // @desc    Get Users
@@ -53,9 +62,9 @@ export const getUser = async (req, res, next) => {
 
 export const addUser = async (req, res, next) => {
     try { 
-        const { first_name, last_name, email, date_joined} = req.body;
+        const {googleId, firstName, lastName, displayName, image} = req.body;
         
-        const newUser = await User.create({first_name, last_name, email, date_joined});
+        const newUser = await User.create({googleId, firstName, lastName, displayName, image});
 
         return res.status(201).json({
             success: true,
@@ -84,9 +93,8 @@ export const addUser = async (req, res, next) => {
 export const updateUser = async (req, res, next) => {
     try { 
         const user = await User.findById(req.params.id);
-        const { first_name, last_name, email} = req.body
-        const userDetail = { first_name, last_name, email}
-
+        const {googleId, firstName, lastName, displayName, image} = req.body
+        const userDetail = {googleId, firstName, lastName, displayName, image}
         if (!user) {
             return res.status(404).json({
                 success: false,

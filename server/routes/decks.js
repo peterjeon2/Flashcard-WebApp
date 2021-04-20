@@ -2,7 +2,7 @@ import express from 'express';
 const router = express.Router();
 import { getCards, getCard, addCard, deleteCard, updateCard } from '../controllers/cardController.js'
 import { getDecks, getDeck, addDeck, deleteDeck, updateDeck } from '../controllers/deckController.js'
-import { getUsers , getUser, addUser, deleteUser, updateUser } from '../controllers/userController.js'
+import { getUserBrowser, getUsers , getUser, addUser, deleteUser, updateUser} from '../controllers/userController.js'
 
 /// CARD ROUTES ///
 
@@ -24,6 +24,10 @@ router.delete('/users/:userId/decks/:deckId/cards/:id/delete', deleteCard);
 router.patch('/users/:userId/decks/:deckId/cards/:id/update', updateCard);
 
 /// USER ROUTES ///
+
+// GET request for user from browser
+
+router.get('/getUser', getUserBrowser);
 
 // GET request for users.
 

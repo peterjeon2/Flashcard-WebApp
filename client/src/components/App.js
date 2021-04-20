@@ -1,13 +1,18 @@
 import * as React from 'react'
-
+import Login from './Login'
 import { useSelector, useDispatch } from 'react-redux'
+import { handleInitialData } from '../actions/shared.js'
 
-const App = () => {
+export default function App() {
+    const dispatch = useDispatch();
+    React.useEffect(() => {
+        dispatch(handleInitialData())
+      },[dispatch]);
+
+    const user = useSelector((state) => state.user);
+    console.log(user)
     return (
-        <div>
-            <h1>App</h1>
-        </div>
+        <Login />
     )
 }
 
-export default App

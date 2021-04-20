@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 // User APIs
+export const getUserBrowser = () => axios.get(`/getUser`, {withCredentials: true});
 export const fetchUser = (id) => axios.get(`/users/${id}`);
 export const createUser = (newUser) => axios.post('/users/create', newUser);
 export const updateUser = (id, updatedUser) => axios.patch(`/users/${id}/update`, updatedUser);

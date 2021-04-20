@@ -4,10 +4,29 @@ const Schema = mongoose.Schema;
 
 const UserSchema = new Schema(
   {
-    first_name: {type: String, required: true},
-    last_name: {type: String, required: true},
-    email: {type: String, required: true},
-    date_joined: {type: Date, default: Date.now}
+    googleId: {
+      type: String,
+      required: true,
+    },
+    displayName: {
+      type: String,
+      required: true,
+    },
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
+    image: {
+      type: String,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
   }
 );
 
