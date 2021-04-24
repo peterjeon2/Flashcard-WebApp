@@ -1,5 +1,5 @@
 import express from 'express';
-import Deck from '../models/deck.js';
+import Deck from '../models/Deck.js';
 
 const router = express.Router();
 
@@ -8,8 +8,10 @@ const router = express.Router();
 // @access  Public
 
 export const getDecks = async (req, res, next) => {
-    try { 
-        const decks = await Deck.find();
+    const {userId}  = req.params;
+  
+    try {
+        const decks = await Deck.find({ userId: userId}).exec();
 
         return res.status(200).json({
             success: true,
@@ -18,7 +20,7 @@ export const getDecks = async (req, res, next) => {
     } catch (err) {
         return res.status(500).json({
             success: false,
-            error: error.message
+            error: err.message
         });
     }
 }
@@ -29,7 +31,7 @@ export const getDecks = async (req, res, next) => {
 // @access  Public
 
 export const getDeck = async (req, res, next) => {
-    const { id } = req.params;
+    const {id} = req.params;
 
     try { 
         const deck = await Deck.findById(id);
@@ -41,7 +43,7 @@ export const getDeck = async (req, res, next) => {
     } catch (err) {
         return res.status(500).json({
             success: false,
-            error: error.message
+            error: err.message
         });
     }
 }
@@ -52,9 +54,9 @@ export const getDeck = async (req, res, next) => {
 
 export const addDeck = async (req, res, next) => {
     try { 
-        const { name, userId, date_created, description, cards} = req.body;
+        const { name, userId, description, cards} = req.body;
         
-        const newDeck = await Deck.create({ name, userId, date_created, description, cards});
+        const newDeck = await Deck.create({ name, userId, description, cards});
 
         return res.status(201).json({
             success: true,
@@ -77,13 +79,14 @@ export const addDeck = async (req, res, next) => {
 }
 
 // @desc    Update deck
-// @route   POST /users/:userId/decks/:id/update
+// @route   PATCH /users/:userId/decks/:id/update
 // @access  Public
 
 export const updateDeck = async (req, res, next) => {
     try { 
-        const deck = await Deck.findById(req.params.id);
-        const { name, userId, date_created, description, cards} = req.body;
+        const { id } = req.params;
+        const deck = await Deck.findById(id);
+        const { name, userId, description, cards} = req.body;
 
         if (!deck) {
             return res.status(404).json({
@@ -92,9 +95,9 @@ export const updateDeck = async (req, res, next) => {
             });
         }
 
-        const deckDetail = { name, user, date_created, description, cards, _id: id};
+        const deckDetail = { name, userId, description, cards};
         
-        const updatedDeck = await Deck.findByIdAndUpdate(req.params.id, deckDetail, { new: true });
+        const updatedDeck = await Deck.findByIdAndUpdate(id, deckDetail, { new: true });
         return res.status(200).json({
             success: true,
             data: updatedDeck
@@ -102,7 +105,7 @@ export const updateDeck = async (req, res, next) => {
     } catch (err) {
         return res.status(500).json({
             success: false,
-            error: 'Server Error'
+            error: err.message
         });
     }
 }
@@ -114,7 +117,8 @@ export const updateDeck = async (req, res, next) => {
 
 export const deleteDeck = async (req, res, next) => {
     try { 
-        const deck = await Deck.findById(req.params.id);
+        const { id } = req.params;
+        const deck = await Deck.findById(id);
 
         if (!deck) {
             return res.status(404).json({
@@ -129,6 +133,7 @@ export const deleteDeck = async (req, res, next) => {
             success: true,
             data: {}
         });
+
     } catch (err) {
         return res.status(500).json({
             success: false,

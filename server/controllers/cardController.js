@@ -1,5 +1,5 @@
 import express from 'express';
-import Card from '../models/card.js'
+import Card from '../models/Card.js'
 
 const router = express.Router();
 
@@ -8,17 +8,20 @@ const router = express.Router();
 // @access  Public
 
 export const getCards = async (req, res, next) => {
+    const { deckId }  = req.params;
+
     try { 
-        const cards = await Card.find();
+        const cards = await Card.find({ deckId: deckId}).exec();
 
         return res.status(200).json({
             success: true,
             data: cards
         });
+
     } catch (err) {
         return res.status(500).json({
             success: false,
-            error: error.message
+            error: 'Server Error'
         });
     }
 }
@@ -38,10 +41,11 @@ export const getCard = async (req, res, next) => {
             success: true,
             data: card
         });
+
     } catch (err) {
         return res.status(500).json({
             success: false,
-            error: error.message
+            error: 'Server Error'
         });
     }
 }
@@ -82,7 +86,8 @@ export const addCard = async (req, res, next) => {
 
 export const updateCard = async (req, res, next) => {
     try { 
-        const card = await Card.findById(req.params.id);
+        const { id } = req.params;
+        const card = await Card.findById(id);
         const { word, definition, userId, deckId } = req.body;
 
         if (!card) {
@@ -92,13 +97,14 @@ export const updateCard = async (req, res, next) => {
             });
         }
 
-        const cardDetail = { word, definition, userId, deckId, _id: id};
+        const cardDetail = { word, definition, userId, deckId};
         
-        const updatedCard = await Card.findByIdAndUpdate(req.params.id, cardDetail, { new: true });
+        const updatedCard = await Card.findByIdAndUpdate(id, cardDetail, { new: true });
         return res.status(200).json({
             success: true,
             data: updatedCard
         });
+
     } catch (err) {
         return res.status(500).json({
             success: false,
@@ -129,6 +135,7 @@ export const deleteCard = async (req, res, next) => {
             success: true,
             data: {}
         });
+        
     } catch (err) {
         return res.status(500).json({
             success: false,

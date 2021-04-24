@@ -57,12 +57,12 @@ router.get('/users/:userId/decks', getDecks);
 router.get('/users/:userId/decks/:id', getDeck);
 
 // POST request for creating a deck.
-router.post('/users/:userId/decks/:id/create', addDeck);
+router.post('/users/:userId/decks/create', addDeck);
 
 // DELETE request to delete deck.
 router.delete('/users/:userId/decks/:id/delete', deleteDeck);
 
 // PATCH request to update deck.
-router.patch('/users/:userId/decks/update', updateDeck);
+router.patch('/users/:userId/decks/:id/update', updateDeck);
 
 export default router;
