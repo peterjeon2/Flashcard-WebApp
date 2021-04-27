@@ -4,9 +4,10 @@ export default function List (props) {
     return (
       <ul>
         {props.items.map((item) => (
-          <li key={item.id}>
+          <li key={item._id}>
               <span>
-                {item.first_name}
+                {item.name}
+                {item.description}
               </span>
           </li>
         ))}

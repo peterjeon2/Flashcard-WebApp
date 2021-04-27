@@ -6,6 +6,16 @@ export const CREATE_USER = 'CREATE_USER';
 export const UPDATE_USER = 'UPDATE_USER';
 export const DELETE_USER = 'DELETE_USER';
 
+
+export const getUsers = async (dispatch) => {
+  try {
+      const { users } = await api.fetchUsers();
+      dispatch({ type: FETCH_USERS, payload: users});
+  } catch (error) {
+      console.log(error.message);
+  }
+};
+
 export const getUser = (id) => async (dispatch) => {
     try {
         const { user } = await api.fetchUser(id);

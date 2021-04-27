@@ -2,19 +2,17 @@ import { getUserBrowser } from '../utils/api';
 
 export const RECEIVE_DATA = 'RECEIVE_DATA';
 
-function receiveData(data) {
+function receiveData(user) {
     return { 
         type: RECEIVE_DATA,
-        user: data
+        payload: user
     }
 }
 
 export function handleInitialData() {
     return (dispatch) => {
-        return Promise.all([
-            getUserBrowser()
-        ]).then((data) => {
-            dispatch(receiveData(data))
+        return getUserBrowser().then((res) => {
+            dispatch(receiveData(res.data))
         })
     }
 }

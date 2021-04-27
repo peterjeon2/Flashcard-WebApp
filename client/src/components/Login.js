@@ -1,14 +1,12 @@
-import * as react from 'react'
+// import * as react from 'react'
+// fix href //
 
 export default function Login() {
-    const googleLogin = () => {
-        window.open("http://localhost:5000/auth/google","self")
-    }
     return (
         <div>
              <h1>Login</h1>
              <div>
-                 <a onClick={googleLogin}>
+                 <a href = "http://localhost:5000/auth/google">
                      Log In with Google
                  </a>
              </div>
