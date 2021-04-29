@@ -93,8 +93,8 @@ export const addUser = async (req, res, next) => {
 export const updateUser = async (req, res, next) => {
     try { 
         const user = await User.findById(req.params.id);
-        const {googleId, firstName, lastName, displayName, image} = req.body
-        const userDetail = {googleId, firstName, lastName, displayName, image}
+        const { googleId, firstName, lastName, displayName, image } = req.body
+        const userDetail = { googleId, firstName, lastName, displayName, image }
         if (!user) {
             return res.status(404).json({
                 success: false,

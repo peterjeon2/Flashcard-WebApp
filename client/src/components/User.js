@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export default function User() {
     const user = useSelector((state) => state.users);
+    
     return (
         <h1>
             Hi {user.displayName}

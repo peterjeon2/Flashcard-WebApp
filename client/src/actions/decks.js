@@ -28,8 +28,8 @@ export const getDeck = (userId, deckId) => async (dispatch) => {
 
 export const createDeck = (userId, newDeck) => async (dispatch) => {
     try {
-        const { newDeck } = await api.createDeck(userId, newDeck);
-        dispatch({ type: CREATE_DECK, payload: newDeck });
+        const { deck } = await api.createDeck(userId, newDeck);
+        dispatch({ type: CREATE_DECK, payload: deck });
     } catch (err) {
         console.log(err.message);
     }

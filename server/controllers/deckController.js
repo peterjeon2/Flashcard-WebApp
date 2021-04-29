@@ -54,8 +54,8 @@ export const getDeck = async (req, res, next) => {
 
 export const addDeck = async (req, res, next) => {
     try { 
-        const { name, userId, description, cards} = req.body;
-        
+        const { name, userId, description} = req.body;
+        const cards = []
         const newDeck = await Deck.create({ name, userId, description, cards});
 
         return res.status(201).json({
@@ -86,7 +86,8 @@ export const updateDeck = async (req, res, next) => {
     try { 
         const { id } = req.params;
         const deck = await Deck.findById(id);
-        const { name, userId, description, cards} = req.body;
+        const { name, description} = req.body;
+        const { userId, cards } = deck
 
         if (!deck) {
             return res.status(404).json({

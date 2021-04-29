@@ -1,5 +1,6 @@
 import express from 'express';
 import Card from '../models/Card.js'
+import Deck from '../models/Deck.js'
 
 const router = express.Router();
 
@@ -59,7 +60,15 @@ export const addCard = async (req, res, next) => {
         const { word, definition, userId, deckId} = req.body;
         
         const newCard = await Card.create({ word, definition, userId, deckId});
-
+        Deck.findOneAndUpdate({_id: deckId},
+            { $push: { cards: newCard._id }},
+            function (error, success) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log(success);
+                }
+            })
         return res.status(201).json({
             success: true,
             data: newCard
@@ -74,7 +83,7 @@ export const addCard = async (req, res, next) => {
         } else {
             return res.status(500).json({
                 success: false,
-                error: 'Server Error'
+                error: err.message
             });
         }
     }
@@ -88,8 +97,8 @@ export const updateCard = async (req, res, next) => {
     try { 
         const { id } = req.params;
         const card = await Card.findById(id);
-        const { word, definition, userId, deckId } = req.body;
-
+        const { word, definition } = req.body;
+        const { userId, deckId } = card
         if (!card) {
             return res.status(404).json({
                 success: false,
@@ -121,7 +130,16 @@ export const updateCard = async (req, res, next) => {
 export const deleteCard = async (req, res, next) => {
     try { 
         const card = await Card.findById(req.params.id);
-
+        Deck.findOneAndUpdate({_id: card.deckId},
+            { $pull: { cards: card._id }},
+            function (error, success) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log(success);
+                }
+            })
+        
         if (!card) {
             return res.status(404).json({
                 success: false,
@@ -129,13 +147,13 @@ export const deleteCard = async (req, res, next) => {
             });
         }
 
-        await user.remove();
+        await card.remove();
 
         return res.status(200).json({
             success: true,
             data: {}
         });
-        
+
     } catch (err) {
         return res.status(500).json({
             success: false,

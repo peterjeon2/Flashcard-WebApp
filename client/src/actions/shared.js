@@ -1,6 +1,7 @@
 import { getUserBrowser } from '../utils/api';
 
 export const RECEIVE_DATA = 'RECEIVE_DATA';
+export const RESET_DATA = 'RESET_DATA';
 
 function receiveData(user) {
     return { 
@@ -17,3 +18,6 @@ export function handleInitialData() {
     }
 }
 
+export function resetData() {
+    return ({type: RESET_DATA})
+}

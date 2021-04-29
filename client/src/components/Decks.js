@@ -8,7 +8,7 @@ export default function Decks() {
     const user = useSelector((state) => state.users);
     React.useEffect(() => {
         dispatch(getDecks(user._id))
-    }, [user]);
+    }, [dispatch, user]);
     const decks = useSelector((state) => state.decks);
 
     console.log(decks)
@@ -18,7 +18,7 @@ export default function Decks() {
                 Decks
             </h2>
 
-            {/* <List items={decks}/> */}
+           { decks && <List items={decks}/>}
         </div>
     )
 }

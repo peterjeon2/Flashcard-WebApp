@@ -4,7 +4,6 @@ import User from './User'
 import Decks from './Decks'
 import { useSelector, useDispatch } from 'react-redux'
 import { handleInitialData } from '../actions/shared'
-import { getDecks } from '../actions/decks'
 
 export default function App() {
     const dispatch = useDispatch();
@@ -12,7 +11,6 @@ export default function App() {
         dispatch(handleInitialData())
         
       },[dispatch]);
-    const user = useSelector((state) => state.users);
     return (
         <div>
             <Login />

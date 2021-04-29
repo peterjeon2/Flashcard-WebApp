@@ -1,5 +1,5 @@
 import { FETCH_USERS, FETCH_USER, CREATE_USER, UPDATE_USER, DELETE_USER} from '../actions/users.js';
-import { RECEIVE_DATA } from '../actions/shared.js';
+import { RECEIVE_DATA, RESET_DATA } from '../actions/shared.js';
 
 export default function users (state = [], action) {
     switch(action.type) {
@@ -24,6 +24,10 @@ export default function users (state = [], action) {
             };
         case RECEIVE_DATA :
             return action.payload;
+        case RESET_DATA:
+            return {
+                undefined
+            }
         default : 
             return state;
     }
